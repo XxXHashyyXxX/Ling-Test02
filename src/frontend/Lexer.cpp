@@ -31,22 +31,62 @@ Tokens Lexer::Tokenize(const std::string_view &expression)
         }
 
         if(*it == '+') {
-            tokens.push_back(Token(Token::Type::OperatorPlus));
+            if(tokens.empty()) {
+                tokens.push_back(Token(Token::Type::OperatorPlus, Token::OperatorArity::Unary));
+                continue;
+            }
+            auto previous = tokens.back();
+            if(previous.type == Token::Type::LiteralDouble ||
+                    previous.type == Token::Type::LiteralInt || 
+                    previous.type == Token::Type::ParenthesisRight)
+                tokens.push_back(Token(Token::Type::OperatorPlus, Token::OperatorArity::Binary));
+            else
+                tokens.push_back(Token(Token::Type::OperatorPlus, Token::OperatorArity::Unary));
             continue;
         }
 
         if(*it == '-') {
-            tokens.push_back(Token(Token::Type::OperatorMinus));
+            if(tokens.empty()) {
+                tokens.push_back(Token(Token::Type::OperatorMinus, Token::OperatorArity::Unary));
+                continue;
+            }
+            auto previous = tokens.back();
+            if(previous.type == Token::Type::LiteralDouble ||
+                    previous.type == Token::Type::LiteralInt || 
+                    previous.type == Token::Type::ParenthesisRight)
+                tokens.push_back(Token(Token::Type::OperatorMinus, Token::OperatorArity::Binary));
+            else
+                tokens.push_back(Token(Token::Type::OperatorMinus, Token::OperatorArity::Unary));
             continue;
         }
 
         if(*it == '*') {
-            tokens.push_back(Token(Token::Type::OperatorStar));
+            if(tokens.empty()) {
+                tokens.push_back(Token(Token::Type::OperatorStar, Token::OperatorArity::Unary));
+                continue;
+            }
+            auto previous = tokens.back();
+            if(previous.type == Token::Type::LiteralDouble ||
+                    previous.type == Token::Type::LiteralInt || 
+                    previous.type == Token::Type::ParenthesisRight)
+                tokens.push_back(Token(Token::Type::OperatorStar, Token::OperatorArity::Binary));
+            else
+                tokens.push_back(Token(Token::Type::OperatorStar, Token::OperatorArity::Unary));
             continue;
         }
 
         if(*it == '/') {
-            tokens.push_back(Token(Token::Type::OperatorSlash));
+            if(tokens.empty()) {
+                tokens.push_back(Token(Token::Type::OperatorSlash, Token::OperatorArity::Unary));
+                continue;
+            }
+            auto previous = tokens.back();
+            if(previous.type == Token::Type::LiteralDouble ||
+                    previous.type == Token::Type::LiteralInt || 
+                    previous.type == Token::Type::ParenthesisRight)
+                tokens.push_back(Token(Token::Type::OperatorSlash, Token::OperatorArity::Binary));
+            else
+                tokens.push_back(Token(Token::Type::OperatorSlash, Token::OperatorArity::Unary));
             continue;
         }
 
