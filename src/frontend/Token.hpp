@@ -17,7 +17,7 @@ struct Token {
 
     std::variant<std::monostate, int, double, OperatorArity> value;
 
-    Token(Type type = Type::Invalid, OperatorArity arity);
+    Token(Type type = Type::Invalid, OperatorArity arity = OperatorArity::Binary);
     Token(int value) : value(value), type(Type::LiteralInt) {}
     Token(double value) : value(value), type(Type::LiteralDouble) {}
 
