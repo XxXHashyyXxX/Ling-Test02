@@ -9,6 +9,22 @@ Token::Token(Type type)
     this->type = type;
 }
 
+int Token::GetValueAsNumber()
+{
+    if(type != Type::LiteralInt) throw std::runtime_error("Value stored in token is not a number");
+    if(!std::holds_alternative<int>(value)) throw std::runtime_error("Stored value doesnt match the type");
+
+    return std::get<int>(value);
+}
+
+double Token::GetValueAsReal()
+{
+    if(type != Type::LiteralDouble) throw std::runtime_error("Value stored in token is not a real");
+    if(!std::holds_alternative<double>(value)) throw std::runtime_error("Stored value doesnt match the type");
+
+    return std::get<double>(value);
+}
+
 std::ostream &operator<<(std::ostream &os, const Token &token)
 {
     switch(token.type) {

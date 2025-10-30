@@ -18,4 +18,7 @@ struct Token {
     Token(double value) : value(value), type(Type::LiteralDouble) {}
 
     friend std::ostream& operator<<(std::ostream& os, const Token& token);
+
+    int GetValueAsNumber();
+    double GetValueAsReal();
 };
