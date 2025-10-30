@@ -11,9 +11,13 @@ struct Token {
         ParenthesisLeft, ParenthesisRight
     } type;
 
-    std::variant<std::monostate, int, double> value;
+    enum class OperatorArity {
+        Unary, Binary
+    };
 
-    Token(Type type = Type::Invalid);
+    std::variant<std::monostate, int, double, OperatorArity> value;
+
+    Token(Type type = Type::Invalid, OperatorArity arity);
     Token(int value) : value(value), type(Type::LiteralInt) {}
     Token(double value) : value(value), type(Type::LiteralDouble) {}
 
@@ -21,4 +25,5 @@ struct Token {
 
     int GetValueAsNumber();
     double GetValueAsReal();
+    OperatorArity GetValueAsOperatorArity();
 };

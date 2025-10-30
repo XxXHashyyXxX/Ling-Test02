@@ -1,12 +1,13 @@
 #include "Token.hpp"
 #include <stdexcept>
 
-Token::Token(Type type)
+Token::Token(Type type, OperatorArity arity)
 {
     if(type == Type::LiteralInt || type == Type::LiteralDouble) 
         throw std::invalid_argument("Type provided for token requires initialization with value");
     
     this->type = type;
+    value = arity;
 }
 
 int Token::GetValueAsNumber()
@@ -23,6 +24,15 @@ double Token::GetValueAsReal()
     if(!std::holds_alternative<double>(value)) throw std::runtime_error("Stored value doesnt match the type");
 
     return std::get<double>(value);
+}
+
+Token::OperatorArity Token::GetValueAsOperatorArity()
+{
+    if(type != Type::OperatorMinus && type != Type::OperatorPlus && type != Type::OperatorSlash && type != Type::OperatorSlash)
+        throw std::runtime_error("Value stored in token is not an operator");
+    if(!std::holds_alternative<OperatorArity>(value)) throw std::runtime_error("Stored value doesnt match the type");
+
+    return std::get<OperatorArity>(value);
 }
 
 std::ostream &operator<<(std::ostream &os, const Token &token)
