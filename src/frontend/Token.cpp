@@ -48,13 +48,49 @@ std::ostream &operator<<(std::ostream &os, const Token &token)
             if(!std::holds_alternative<double>(token.value)) throw std::runtime_error("Stored value doesnt match the type");
             return os << "Double " << std::get<double>(token.value);
         case Token::Type::OperatorMinus:
-            return os << "Operator -";
+            if(!std::holds_alternative<Token::OperatorArity>(token.value)) throw std::runtime_error("Stored value doesnt match the type");
+            os << "Operator - ";
+            switch(std::get<Token::OperatorArity>(token.value)) {
+                case Token::OperatorArity::Binary:
+                    return os << "binary";
+                case Token::OperatorArity::Unary:
+                    return os << "unary";
+                default:
+                    throw std::runtime_error("Unrecognized operator arity");
+            }
         case Token::Type::OperatorPlus:
-            return os << "Operator +";
+            if(!std::holds_alternative<Token::OperatorArity>(token.value)) throw std::runtime_error("Stored value doesnt match the type");
+            os << "Operator + ";
+            switch(std::get<Token::OperatorArity>(token.value)) {
+                case Token::OperatorArity::Binary:
+                    return os << "binary";
+                case Token::OperatorArity::Unary:
+                    return os << "unary";
+                default:
+                    throw std::runtime_error("Unrecognized operator arity");
+            }
         case Token::Type::OperatorSlash:
-            return os << "Operator /";
+            if(!std::holds_alternative<Token::OperatorArity>(token.value)) throw std::runtime_error("Stored value doesnt match the type");
+            os << "Operator / ";
+            switch(std::get<Token::OperatorArity>(token.value)) {
+                case Token::OperatorArity::Binary:
+                    return os << "binary";
+                case Token::OperatorArity::Unary:
+                    return os << "unary";
+                default:
+                    throw std::runtime_error("Unrecognized operator arity");
+            }
         case Token::Type::OperatorStar:
-            return os << "Operator *";
+            if(!std::holds_alternative<Token::OperatorArity>(token.value)) throw std::runtime_error("Stored value doesnt match the type");
+            os << "Operator * ";
+            switch(std::get<Token::OperatorArity>(token.value)) {
+                case Token::OperatorArity::Binary:
+                    return os << "binary";
+                case Token::OperatorArity::Unary:
+                    return os << "unary";
+                default:
+                    throw std::runtime_error("Unrecognized operator arity");
+            }
         case Token::Type::ParenthesisLeft:
             return os << "Parenthesis (";
         case Token::Type::ParenthesisRight:
