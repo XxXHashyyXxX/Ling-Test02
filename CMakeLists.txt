@@ -5,4 +5,5 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(ling src/main.cpp
                 src/frontend/Token.cpp
-                src/frontend/Lexer.cpp)
+                src/frontend/Lexer.cpp
+                src/frontend/Ast.cpp)
