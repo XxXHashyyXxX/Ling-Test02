@@ -36,8 +36,8 @@ public:
     };
 
     ~AstUnaryOperatorNode() = default;
-    AstUnaryOperatorNode(Type type, AstValueNode* operand) : 
-        type(type), operand(operand) {}
+    AstUnaryOperatorNode(Type type, std::unique_ptr<AstValueNode> operand) : 
+        type(type), operand(std::move(operand)) {}
 
     int GetIntValue() override;
     double GetDoubleValue() override;
@@ -54,8 +54,8 @@ public:
     };
 
     ~AstBinaryOperatorNode() = default;
-    AstBinaryOperatorNode(Type type, AstValueNode* leftOperand, AstValueNode* rightOperand) :
-        type(type), leftOperand(leftOperand), rightOperand(rightOperand) {}
+    AstBinaryOperatorNode(Type type, std::unique_ptr<AstValueNode> leftOperand, std::unique_ptr<AstValueNode> rightOperand) :
+        type(type), leftOperand(std::move(leftOperand)), rightOperand(std::move(rightOperand)) {}
 
     int GetIntValue() override;
     double GetDoubleValue() override;
